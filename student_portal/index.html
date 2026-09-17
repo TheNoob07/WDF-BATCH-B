@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="CSS Files/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="portal-shell">
+    <aside class="sidebar">
+        <a class="logo" href="index.html">Student<br>Portal</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="index.html" class="active"><span class="nav-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>Home</a>
+            <a href="profile.html"><span class="nav-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></span>Profile</a>
+            <a href="course.html"><span class="nav-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>Courses</a>
+            <a href="attendance.html"><span class="nav-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></span>Attendance</a>
+            <a href="timetable.html"><span class="nav-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>Timetable</a>
+            <a href="assignments.html"><span class="nav-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></span>Assignments</a>
+            <a href="result.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>Results</a>
+            <a href="notice.html"><span class="nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>Notes</a>
+            <a href="help.html"><span class="nav-icon"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>Help</a>
+        </nav>
+    </aside>
+
+    <main class="dashboard container">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="hero-mark"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+                <h1>Welcome to the Student Portal</h1>
+                <p>Track your attendance, assignments, timetable and<br class="desktop-only"> results from one place.</p>
+                <div class="hero-actions">
+                    <a class="btn" href="profile.html">View Profile</a>
+                    <a class="btn ghost" href="course.html">Browse Courses</a>
+                </div>
+            </div>
+            <div class="hero-art" aria-label="Student studying illustration" role="img">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Students studying together">
+            </div>
+        </section>
+
+        <section class="cards" aria-label="Portal shortcuts">
+            <article class="card attendance-card">
+                <div class="card-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div>
+                <h2>Attendance</h2>
+                <p>Quick overview of your<br>attendance across subjects.</p>
+                <a class="link" href="attendance.html">View <span>→</span></a>
+            </article>
+            <article class="card assignment-card">
+                <div class="card-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></div>
+                <h2>Assignments</h2>
+                <p>Open and submit assignments<br>before deadlines.</p>
+                <a class="link" href="assignments.html">View <span>→</span></a>
+            </article>
+            <article class="card timetable-card">
+                <div class="card-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></div>
+                <h2>Timetable</h2>
+                <p>See your weekly class<br>schedule.</p>
+                <a class="link" href="timetable.html">View <span>→</span></a>
+            </article>
+            <article class="card results-card">
+                <div class="card-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+                <h2>Results</h2>
+                <p>Check your grades and<br>performance.</p>
+                <a class="link" href="result.html">View <span>→</span></a>
+            </article>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>
