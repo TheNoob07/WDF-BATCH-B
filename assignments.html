@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Assignments</title>
+    <link rel="stylesheet" href="CSS Files/assignments.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="Java Script Files/assignments.js" defer></script>
+</head>
+<body>
+<div class="portal-shell">
+    <aside class="sidebar">
+        <a class="logo" href="index.html">Student<br>Portal</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="index.html"><span class="nav-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>Home</a>
+            <a href="profile.html"><span class="nav-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></span>Profile</a>
+            <a href="course.html"><span class="nav-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>Courses</a>
+            <a href="attendance.html"><span class="nav-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></span>Attendance</a>
+            <a href="timetable.html"><span class="nav-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>Timetable</a>
+            <a href="assignments.html" class="active"><span class="nav-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></span>Assignments</a>
+            <a href="result.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>Results</a>
+            <a href="notice.html"><span class="nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>Notes</a>
+            <a href="help.html"><span class="nav-icon"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>Help</a>
+        </nav>
+
+    </aside>
+
+    <main class="dashboard assignments-dashboard container">
+        <header class="welcome-bar">
+            <div class="welcome-avatar"><i class="fa-solid fa-user" aria-hidden="true"></i></div>
+            <div class="welcome-copy">
+                <span>Welcome back,</span>
+                <strong>Dhruv Patel</strong>
+            </div>
+            <div class="current-date"><span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span> 18 May 2025</div>
+        </header>
+
+        <section class="page-heading">
+            <div class="heading-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></div>
+            <div>
+                <h1>Assignments</h1>
+                <p>View and track all your upcoming and pending assignments.</p>
+            </div>
+        </section>
+
+        <section class="assignment-list" aria-label="Upcoming assignments">
+            <article class="assignment-row">
+                <div class="assignment-number number-blue">1</div>
+                <div class="assignment-info"><h2>HTML website</h2><p>Create a responsive student site.</p></div>
+                <div class="due-date"><span class="calendar blue-calendar"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span><span><small>Due Date</small><strong>22 July 2025</strong></span></div>
+                <span class="status status-blue">Pending</span>
+            </article>
+            <article class="assignment-row">
+                <div class="assignment-number number-green">2</div>
+                <div class="assignment-info"><h2>Java</h2><p>Implement console application.</p></div>
+                <div class="due-date"><span class="calendar green-calendar"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span><span><small>Due Date</small><strong>25 July 2025</strong></span></div>
+                <span class="status status-green">Pending</span>
+            </article>
+            <article class="assignment-row">
+                <div class="assignment-number number-purple">3</div>
+                <div class="assignment-info"><h2>C++</h2><p>Data structures practice.</p></div>
+                <div class="due-date"><span class="calendar purple-calendar"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span><span><small>Due Date</small><strong>28 July 2025</strong></span></div>
+                <span class="status status-purple">Pending</span>
+            </article>
+        </section>
+
+        <section class="card" style="margin-top: 28px; padding: 24px;">
+            <div class="card-icon" style="background:#eaf2ff; color:#1769e8;"><i class="fa-solid fa-star" aria-hidden="true"></i></div>
+            <h2 style="margin: 14px 0 10px; font-size: 20px;">Club Activity Corner</h2>
+            <p style="margin-bottom: 16px;">Explore the student club showcase and stay connected with your college community.</p>
+            <div class="hero-actions" style="gap: 10px;">
+                <a class="btn" href="../WDF pratical/home.html">Open Clubs</a>
+                <a class="btn ghost" href="../WDF pratical/Clubs.html">View Club List</a>
+            </div>
+        </section>
+
+        <a class="btn back-home" href="index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>&nbsp; Back Home</a>
+    </main>
+</div>
+</body>
+</html>
