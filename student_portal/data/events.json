@@ -1,0 +1,17 @@
+[
+  { "id": 1, "title": "First-Year Welcome Fair", "category": "Campus", "date": "2026-10-05", "location": "Central Quad", "description": "Meet student societies, campus teams, and fellow first-year students." },
+  { "id": 2, "title": "Autumn Lecture: Climate Futures", "category": "Academic", "date": "2026-10-08", "location": "Hall A", "description": "A public lecture on practical approaches to a changing climate." },
+  { "id": 3, "title": "Campus 5K Run", "category": "Sports", "date": "2026-10-11", "location": "North Gate", "description": "Take part in a relaxed five-kilometre campus fun run." },
+  { "id": 4, "title": "Open Mic Evening", "category": "Arts", "date": "2026-10-14", "location": "Student Union Lounge", "description": "An evening of student music, poetry, and short performances." },
+  { "id": 5, "title": "Research Poster Showcase", "category": "Academic", "date": "2026-10-17", "location": "Science Atrium", "description": "Explore current student research across science and engineering." },
+  { "id": 6, "title": "Community Garden Day", "category": "Community", "date": "2026-10-20", "location": "East Garden", "description": "Help prepare the community garden for the new growing season." },
+  { "id": 7, "title": "Women in Technology Panel", "category": "Career", "date": "2026-10-23", "location": "Innovation Centre", "description": "Hear career stories and advice from technology professionals." },
+  { "id": 8, "title": "Interfaculty Basketball", "category": "Sports", "date": "2026-10-26", "location": "Sports Hall", "description": "Support faculty teams in the annual basketball tournament." },
+  { "id": 9, "title": "Film Society: World Cinema", "category": "Arts", "date": "2026-10-29", "location": "Media Room 2", "description": "Join the film society for a screening and post-film discussion." },
+  { "id": 10, "title": "Internship Preparation Workshop", "category": "Career", "date": "2026-11-02", "location": "Career Studio", "description": "Practice interview techniques and improve your application materials." },
+  { "id": 11, "title": "Library Research Skills Lab", "category": "Academic", "date": "2026-11-05", "location": "Main Library, Level 1", "description": "Learn to find, evaluate, and cite reliable academic sources." },
+  { "id": 12, "title": "International Food Festival", "category": "Community", "date": "2026-11-08", "location": "Central Quad", "description": "Share food, music, and traditions from across the student community." },
+  { "id": 13, "title": "Student Photography Walk", "category": "Arts", "date": "2026-11-11", "location": "Meet at the Library", "description": "Explore campus photography with a guided creative walk." },
+  { "id": 14, "title": "Mindful Movement Session", "category": "Wellbeing", "date": "2026-11-14", "location": "Wellness Studio", "description": "A beginner-friendly session combining stretching and breathing." },
+  { "id": 15, "title": "Robotics Club Demonstration", "category": "Technology", "date": "2026-11-17", "location": "Engineering Lab 3", "description": "See student-built robots in action and meet the robotics club." }
+]

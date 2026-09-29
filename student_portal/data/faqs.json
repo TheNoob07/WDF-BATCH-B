@@ -1,0 +1,17 @@
+[
+  { "id": 1, "question": "How do I reset my student account password?", "category": "Accounts", "answer": "Use the password reset link on the sign-in page and follow the instructions sent to your registered email address." },
+  { "id": 2, "question": "Where can I view my class timetable?", "category": "Academics", "answer": "Open Timetable from the portal navigation. Your current weekly schedule is listed there." },
+  { "id": 3, "question": "How can I contact the library?", "category": "Library", "answer": "Visit the main library help desk during opening hours or use the library contact form on the university website." },
+  { "id": 4, "question": "When are tuition fees due?", "category": "Finance", "answer": "Check the student finance calendar for the dates that apply to your programme and payment plan." },
+  { "id": 5, "question": "How do I borrow a library book?", "category": "Library", "answer": "Bring your student card to a self-service borrowing station or ask a member of library staff for assistance." },
+  { "id": 6, "question": "Where do I submit an assignment?", "category": "Academics", "answer": "Open the relevant course page and follow the submission instructions provided by your instructor." },
+  { "id": 7, "question": "How can I update my contact details?", "category": "Accounts", "answer": "Open your student profile, edit the contact fields, and save your changes." },
+  { "id": 8, "question": "What should I do if I miss an exam?", "category": "Exams", "answer": "Contact your academic department as soon as possible and review the university's mitigating circumstances process." },
+  { "id": 9, "question": "Is counselling available to students?", "category": "Wellbeing", "answer": "Student wellbeing services offer confidential appointments. Use the wellbeing page to find booking details." },
+  { "id": 10, "question": "How do I connect to campus Wi-Fi?", "category": "Technology", "answer": "Choose the university student network and sign in with your student account credentials." },
+  { "id": 11, "question": "Can I book a study room?", "category": "Library", "answer": "Study rooms can be reserved through the library booking page using your university account." },
+  { "id": 12, "question": "Where can I find internship support?", "category": "Careers", "answer": "The careers team provides appointment booking, application reviews, and information about current opportunities." },
+  { "id": 13, "question": "How do I request an enrollment letter?", "category": "Records", "answer": "Submit a request through the student records office. Allow several working days for processing." },
+  { "id": 14, "question": "Who can help with accessibility accommodations?", "category": "Wellbeing", "answer": "Contact the accessibility services team to discuss adjustments and the supporting documentation needed." },
+  { "id": 15, "question": "How do I join a student club?", "category": "Campus Life", "answer": "Browse the student society directory and contact a club or visit its stand at the next campus fair." }
+]

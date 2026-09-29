@@ -1,0 +1,5 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const style = document.createElement('style'); style.textContent = `.portal-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:25;padding:13px 18px;border-radius:8px;background:#1769e8;color:#fff}.portal-banner button{margin-left:14px;border:0;background:transparent;color:#fff;font-size:18px;cursor:pointer}`; document.head.appendChild(style);
+    const banner = document.createElement('div'); banner.className = 'portal-banner'; banner.innerHTML = 'Profile information loaded <button type="button" aria-label="Dismiss notification">&times;</button>'; banner.querySelector('button').onclick = () => banner.remove(); document.body.appendChild(banner);
+    const card = document.querySelector('.profile .card'); const edit = document.createElement('button'); edit.className = 'btn'; edit.type = 'button'; edit.textContent = 'Edit profile'; card.appendChild(edit); edit.onclick = () => { const name = card.querySelector('dd'); const value = prompt('Enter your name', name.textContent); if (value && value.trim()) name.textContent = value.trim(); };
+});

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Browse events, student profiles, and frequently asked questions loaded from JSON.">
+    <title>JSON Explorer | Student Portal</title>
+    <link rel="stylesheet" href="CSS Files/json-explorer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="Java Script Files/json-explorer.js" defer></script>
+</head>
+<body>
+<div class="portal-shell">
+    <aside class="sidebar">
+        <a class="logo" href="index.html">Student<br>Portal</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="index.html"><span class="nav-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>Home</a>
+            <a href="profile.html"><span class="nav-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></span>Profile</a>
+            <a href="course.html"><span class="nav-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>Courses</a>
+            <a href="attendance.html"><span class="nav-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></span>Attendance</a>
+            <a href="timetable.html"><span class="nav-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>Timetable</a>
+            <a href="assignments.html"><span class="nav-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></span>Assignments</a>
+            <a href="result.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>Results</a>
+            <a href="notice.html"><span class="nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>Notes</a>
+            <a href="help.html"><span class="nav-icon"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>Help</a>
+            <a href="json-explorer.html" class="active" aria-current="page"><span class="nav-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>JSON Explorer</a>
+        </nav>
+    </aside>
+
+    <main class="dashboard container">
+        <header class="welcome-bar">
+            <div class="welcome-avatar"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
+            <div class="welcome-copy"><span>Student Portal</span><strong>Data Library</strong></div>
+            <button class="refresh-button" id="refresh-button" type="button" title="Reload data" aria-label="Reload data">
+                <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+            </button>
+        </header>
+
+        <section class="page-heading">
+            <div class="heading-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></div>
+            <div>
+                <p class="eyebrow">LIVE JSON COLLECTIONS</p>
+                <h1>Campus Data Explorer</h1>
+                <p>Events, student profiles, and answers from the campus community.</p>
+            </div>
+        </section>
+
+        <section class="explorer" aria-label="JSON data explorer">
+            <div class="collection-tabs" role="tablist" aria-label="Choose a collection">
+                <button class="collection-tab active" id="tab-events" type="button" role="tab" aria-selected="true" data-collection="events">
+                    <i class="fa-regular fa-calendar" aria-hidden="true"></i><span>Events</span>
+                </button>
+                <button class="collection-tab" id="tab-students" type="button" role="tab" aria-selected="false" data-collection="students">
+                    <i class="fa-solid fa-user-group" aria-hidden="true"></i><span>Students</span>
+                </button>
+                <button class="collection-tab" id="tab-faqs" type="button" role="tab" aria-selected="false" data-collection="faqs">
+                    <i class="fa-regular fa-circle-question" aria-hidden="true"></i><span>FAQs</span>
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <label class="search-box" for="search-input">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    <input id="search-input" type="search" placeholder="Search this collection" autocomplete="off">
+                </label>
+                <label class="select-control" for="filter-select">
+                    <span>Filter</span>
+                    <select id="filter-select" aria-label="Filter by category"></select>
+                </label>
+                <label class="select-control" for="sort-select">
+                    <span>Sort</span>
+                    <select id="sort-select" aria-label="Sort results">
+                        <option value="title-asc">Name: A to Z</option>
+                        <option value="title-desc">Name: Z to A</option>
+                    </select>
+                </label>
+            </div>
+
+            <div id="location-filters" class="location-filters" hidden>
+                <label class="select-control" for="country-select"><span>Country</span><select id="country-select" aria-label="Filter by country"></select></label>
+                <label class="select-control" for="state-select"><span>State</span><select id="state-select" aria-label="Filter by state"></select></label>
+                <label class="select-control" for="city-select"><span>City</span><select id="city-select" aria-label="Filter by city"></select></label>
+            </div>
+
+            <div class="result-summary">
+                <p id="result-count" aria-live="polite">Loading collection...</p>
+                <span id="data-source" class="source-label">Connecting</span>
+            </div>
+
+            <div id="data-status" class="data-status" role="status" aria-live="polite">Loading JSON data...</div>
+            <div id="record-list" class="record-list" aria-live="polite"></div>
+
+            <nav class="pagination" aria-label="Collection pages">
+                <button id="previous-page" type="button" aria-label="Previous page" disabled><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span>Previous</span></button>
+                <span id="page-indicator">Page 1</span>
+                <button id="next-page" type="button" aria-label="Next page" disabled><span>Next</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </nav>
+        </section>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const style = document.createElement('style'); style.textContent = `.portal-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:25;padding:13px 18px;border-radius:8px;background:#1769e8;color:#fff}.portal-banner button{margin-left:14px;border:0;background:transparent;color:#fff;font-size:18px;cursor:pointer}`; document.head.appendChild(style);
+    const banner = document.createElement('div'); banner.className = 'portal-banner'; banner.innerHTML = 'Enter your student details to continue <button type="button" aria-label="Dismiss notification">&times;</button>'; banner.querySelector('button').onclick = () => banner.remove(); document.body.appendChild(banner);
+    const form = document.querySelector('.auth-card'); form.addEventListener('submit', event => { event.preventDefault(); const fields = form.querySelectorAll('input'); banner.firstChild.textContent = [...fields].some(field => !field.value.trim()) ? 'Please complete both fields ' : 'Login details accepted '; });
+    form.querySelector('a[href="#"]').addEventListener('click', event => { event.preventDefault(); banner.firstChild.textContent = 'Password reset instructions would be sent to your registered email '; });
+});
