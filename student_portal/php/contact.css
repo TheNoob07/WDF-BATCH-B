@@ -1,0 +1,158 @@
+.contact-page {
+    max-width: 1120px;
+}
+
+.contact-page .page-heading {
+    min-height: 135px;
+}
+
+.contact-page .page-heading .eyebrow,
+.section-heading .eyebrow {
+    margin: 0 0 7px;
+    color: #718096;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.server-form {
+    max-width: 680px;
+    padding: 20px 22px;
+}
+
+.server-form input,
+.server-form textarea {
+    display: block;
+    min-height: 42px;
+    font-size: 14px;
+}
+
+.server-form textarea {
+    resize: vertical;
+}
+
+.server-form .btn {
+    margin-top: 18px;
+}
+
+.notice {
+    max-width: 680px;
+    padding: 12px 15px;
+    border: 1px solid;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.notice p {
+    margin: 0 0 6px;
+    font-weight: 700;
+}
+
+.notice ul {
+    margin: 6px 0 0;
+    padding-left: 21px;
+}
+
+.success {
+    color: #116149;
+    background: #edf8f3;
+    border-color: #b7e3d0;
+}
+
+.error {
+    color: #922b24;
+    background: #fff3f0;
+    border-color: #f0c5bd;
+}
+
+.submissions {
+    margin-top: 32px;
+    border-top: 1px solid #e5eaf1;
+    padding-top: 23px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.record-count {
+    color: #53627a;
+    font-size: 13px;
+}
+
+.empty-state {
+    padding: 18px;
+    color: #53627a;
+    background: #fff;
+    border: 1px solid #e5eaf1;
+    border-radius: 7px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid #e5eaf1;
+    border-radius: 7px;
+}
+
+.table-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-scroll th,
+.table-scroll td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #edf1f6;
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.table-scroll th {
+    color: #334155;
+    background: #f7f9fc;
+    font-weight: 700;
+}
+
+.table-scroll td:last-child {
+    min-width: 220px;
+    white-space: pre-wrap;
+}
+
+.back-link {
+    display: inline-block;
+    margin: 24px 0 4px;
+    color: #1769e8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    .contact-page {
+        padding: 20px;
+    }
+
+    .server-form {
+        padding: 16px;
+    }
+
+    .table-scroll th,
+    .table-scroll td {
+        padding: 10px;
+    }
+}

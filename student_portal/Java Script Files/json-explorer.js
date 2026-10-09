@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const previousButton = document.querySelector('#previous-page');
     const nextButton = document.querySelector('#next-page');
     const pageIndicator = document.querySelector('#page-indicator');
+    const eventDialog = document.querySelector('#event-dialog');
+    const studentDialog = document.querySelector('#student-dialog');
+    const eventForm = document.querySelector('#event-form');
+    const studentForm = document.querySelector('#student-form');
     let activeCollection = 'events';
     let records = [];
     let currentPage = 1;
@@ -193,17 +197,70 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.disabled = currentPage >= totalPages;
     };
 
-    tabs.forEach(tab => tab.addEventListener('click', () => {
-        activeCollection = tab.dataset.collection;
+    const activateCollection = async collection => {
+        activeCollection = collection;
         tabs.forEach(item => {
-            const isActive = item === tab;
+            const isActive = item.dataset.collection === collection;
             item.classList.toggle('active', isActive);
             item.setAttribute('aria-selected', String(isActive));
         });
         searchInput.value = '';
         currentPage = 1;
-        loadCollection();
-    }));
+        await loadCollection();
+    };
+
+    const setDialogFeedback = (dialog, message = '', type = '') => {
+        const feedback = dialog.querySelector('[data-form-feedback]');
+        feedback.textContent = message;
+        feedback.classList.toggle('error', type === 'error');
+        feedback.classList.toggle('success', type === 'success');
+    };
+
+    const openDialog = (dialog, form) => {
+        form.reset();
+        setDialogFeedback(dialog);
+        dialog.showModal();
+        dialog.querySelector('input').focus();
+    };
+
+    const saveRecord = async (event, collection, form, dialog) => {
+        event.preventDefault();
+        const submitButton = form.querySelector('[type="submit"]');
+        submitButton.disabled = true;
+        setDialogFeedback(dialog, 'Saving record...');
+
+        try {
+            const response = await fetch('php/data-api.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ collection, record: Object.fromEntries(new FormData(form).entries()) })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'The record could not be saved.');
+
+            await activateCollection(collection);
+            searchInput.value = result.record[collections[collection].titleKey] || '';
+            filterSelect.value = 'all';
+            countrySelect.value = 'all';
+            stateSelect.value = 'all';
+            citySelect.value = 'all';
+            currentPage = 1;
+            render();
+            setDialogFeedback(dialog, `${collection === 'events' ? 'Event' : 'Student'} saved to the JSON collection.`, 'success');
+            form.reset();
+        } catch (error) {
+            setDialogFeedback(dialog, error.message || 'The record could not be saved. Please try again.', 'error');
+        } finally {
+            submitButton.disabled = false;
+        }
+    };
+
+    tabs.forEach(tab => tab.addEventListener('click', () => activateCollection(tab.dataset.collection)));
+    document.querySelector('#add-event-button').addEventListener('click', () => openDialog(eventDialog, eventForm));
+    document.querySelector('#add-student-button').addEventListener('click', () => openDialog(studentDialog, studentForm));
+    document.querySelectorAll('[data-dialog-close]').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
+    eventForm.addEventListener('submit', event => saveRecord(event, 'events', eventForm, eventDialog));
+    studentForm.addEventListener('submit', event => saveRecord(event, 'students', studentForm, studentDialog));
     searchInput.addEventListener('input', () => { currentPage = 1; render(); });
     filterSelect.addEventListener('change', () => { currentPage = 1; render(); });
     sortSelect.addEventListener('change', () => { currentPage = 1; render(); });
