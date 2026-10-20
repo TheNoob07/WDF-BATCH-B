@@ -11,6 +11,26 @@ function respond(int $status, array $body): void
     exit;
 }
 
+ini_set('session.use_strict_mode', '1');
+$isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== '' && $_SERVER['HTTPS'] !== 'off';
+session_start([
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax',
+    'cookie_secure' => $isHttps,
+]);
+$lastActivity = filter_var($_SESSION['last_activity'] ?? null, FILTER_VALIDATE_INT);
+$loginTime = filter_var($_SESSION['login_time'] ?? null, FILTER_VALIDATE_INT);
+if (
+    !isset($_SESSION['auth_user_id'], $_SESSION['auth_role'])
+    || $_SESSION['auth_role'] !== 'admin'
+    || $lastActivity === false || $loginTime === false
+    || time() - $lastActivity > 900
+    || time() - $loginTime > 28800
+) {
+    respond(401, ['error' => 'Log in as an administrator to add records.']);
+}
+$_SESSION['last_activity'] = time();
+
 function textLength(string $value): int
 {
     return function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);

@@ -1,7 +1,25 @@
 <?php
 declare(strict_types=1);
 
-session_start();
+$isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== '' && $_SERVER['HTTPS'] !== 'off';
+session_start([
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax',
+    'cookie_secure' => $isHttps,
+]);
+
+$lastActivity = filter_var($_SESSION['last_activity'] ?? null, FILTER_VALIDATE_INT);
+$loginTime = filter_var($_SESSION['login_time'] ?? null, FILTER_VALIDATE_INT);
+if (
+    !isset($_SESSION['auth_user_id'])
+    || $lastActivity === false || $loginTime === false
+    || time() - $lastActivity > 900
+    || time() - $loginTime > 28800
+) {
+    header('Location: login.php', true, 303);
+    exit;
+}
+$_SESSION['last_activity'] = time();
 
 if (empty($_SESSION['contact_csrf'])) {
     $_SESSION['contact_csrf'] = bin2hex(random_bytes(32));
@@ -139,6 +157,9 @@ if (is_readable($storageFile) && ($handle = fopen($storageFile, 'r')) !== false)
             <a href="../result.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>Results</a>
             <a href="../notice.html"><span class="nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>Notes</a>
             <a href="../help.html" class="active" aria-current="page"><span class="nav-icon"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>Help</a>
+            <a href="registration.php"><span class="nav-icon"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>Sign Up</a>
+            <a href="login.php"><span class="nav-icon"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i></span>Log in</a>
+            <a href="database.php"><span class="nav-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>Database</a>
             <a href="../json-explorer.html"><span class="nav-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>Data View</a>
         </nav>
     </aside>
