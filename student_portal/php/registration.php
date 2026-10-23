@@ -48,7 +48,15 @@ $databaseUser = getenv('STUDENT_PORTAL_DB_USER') ?: 'root';
 $databasePassword = getenv('STUDENT_PORTAL_DB_PASSWORD');
 $databasePassword = $databasePassword === false ? '' : $databasePassword;
 $errorMessage = '';
-$formValues = ['username' => '', 'email' => ''];
+$formValues = [
+    'full_name' => '',
+    'mobile' => '',
+    'program' => '',
+    'year' => '',
+    'gender' => '',
+    'username' => '',
+    'email' => '',
+];
 $databaseAvailable = false;
 $connection = null;
 
@@ -62,6 +70,32 @@ try {
         $token = $_POST['csrf_token'] ?? '';
         if (!is_string($token) || !hash_equals($_SESSION['signup_csrf'], $token)) {
             throw new InvalidArgumentException('Your form session expired. Reload the page and try again.');
+        }
+
+        $formValues['full_name'] = signupField('full_name', 'full name', 80);
+        if (preg_match("/^[\\p{L}\\p{M} .'-]+$/u", $formValues['full_name']) !== 1) {
+            throw new InvalidArgumentException('Enter a valid name using letters, spaces, apostrophes, periods, or hyphens.');
+        }
+
+        $formValues['mobile'] = signupField('mobile', 'mobile number', 20);
+        if (preg_match('/^\\+?[0-9][0-9\\s().-]{6,19}$/', $formValues['mobile']) !== 1) {
+            throw new InvalidArgumentException('Enter a valid mobile number.');
+        }
+
+        $formValues['program'] = signupField('program', 'course or program', 120);
+        $submittedYear = $_POST['year'] ?? null;
+        $year = filter_var($submittedYear, FILTER_VALIDATE_INT);
+        if ($year === false || $year < 1 || $year > 8) {
+            throw new InvalidArgumentException('Choose a study year from 1 to 8.');
+        }
+        $formValues['year'] = (string) $year;
+
+        $formValues['gender'] = signupField('gender', 'gender', 30);
+        if (!in_array($formValues['gender'], ['female', 'male', 'nonbinary', 'other', 'prefer_not_to_say'], true)) {
+            throw new InvalidArgumentException('Choose a valid gender option.');
+        }
+        if (($_POST['accept_terms'] ?? '') !== '1') {
+            throw new InvalidArgumentException('Accept the terms to create an account.');
         }
 
         $formValues['username'] = signupField('username', 'username', 30);
@@ -112,9 +146,21 @@ try {
         $connection->begin_transaction();
         try {
             $insertUser = $connection->prepare(
-                "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'student')"
+                "INSERT INTO users
+                    (username, email, password_hash, full_name, mobile, program, year, gender, role)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'student')"
             );
-            $insertUser->bind_param('sss', $formValues['username'], $formValues['email'], $passwordHash);
+            $insertUser->bind_param(
+                'ssssssis',
+                $formValues['username'],
+                $formValues['email'],
+                $passwordHash,
+                $formValues['full_name'],
+                $formValues['mobile'],
+                $formValues['program'],
+                $year,
+                $formValues['gender']
+            );
             $insertUser->execute();
             $userId = $connection->insert_id;
             $insertUser->close();
@@ -161,18 +207,20 @@ try {
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="Create a Student Portal account using secure MySQLi registration and password hashing.">
     <title>Practical 9: Secure Registration | Student Portal</title>
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/portal-nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="registration.js" defer></script>
+    <script src="../Java%20Script%20Files/registration.js" defer></script>
+    <script src="../Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
 <body>
 <main class="signup-shell">
     <a class="brand" href="../index.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Student Portal</a>
     <section class="signup-card">
         <div class="heading-icon"><i class="fa-solid fa-user-shield" aria-hidden="true"></i></div>
-        <p class="eyebrow">PRACTICAL 9</p>
+        <p class="eyebrow">PRACTICALS 5 &amp; 9</p>
         <h1>Create your account</h1>
-        <p class="intro">Register securely with a unique username and email address.</p>
+        <p class="intro">Enter your student details. Your password is securely hashed before it is stored.</p>
 
         <?php if ($errorMessage !== ''): ?>
             <p class="notice error" role="alert"><?= signupEscape($errorMessage) ?></p>
@@ -185,12 +233,40 @@ try {
         <?php if (!$databaseAvailable): ?>
             <div class="setup-note">
                 <h2>Database setup required</h2>
-                <p>Start MySQL in XAMPP, then import <code>php/database-schema.sql</code> in phpMyAdmin. That script creates the users and registration audit tables as well as the Practical 8 tables.</p>
+                <p>Start MySQL in the XAMPP Control Panel. Then open phpMyAdmin, select <strong>Import</strong>, and import <code>../mysql/database-schema.sql</code>. This creates the user and audit tables needed for registration.</p>
+                <p>For an existing database, follow <a href="DATABASE-SETUP.md">the setup and migration guide</a>. Once setup is complete, reload this page to create your account.</p>
                 <p>To use a custom database password or host, set the <code>STUDENT_PORTAL_DB_HOST</code>, <code>STUDENT_PORTAL_DB_NAME</code>, <code>STUDENT_PORTAL_DB_USER</code>, and <code>STUDENT_PORTAL_DB_PASSWORD</code> environment variables.</p>
             </div>
         <?php else: ?>
             <form method="post" action="registration.php" class="signup-form">
                 <input type="hidden" name="csrf_token" value="<?= signupEscape($_SESSION['signup_csrf']) ?>">
+
+                <label for="full-name">Full name</label>
+                <input id="full-name" name="full_name" type="text" maxlength="80" autocomplete="name" required value="<?= signupEscape($formValues['full_name']) ?>">
+
+                <label for="mobile">Mobile number</label>
+                <input id="mobile" name="mobile" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" pattern="\+?[0-9][0-9\s().-]{6,19}" required value="<?= signupEscape($formValues['mobile']) ?>">
+
+                <label for="program">Course / program</label>
+                <input id="program" name="program" type="text" maxlength="120" required value="<?= signupEscape($formValues['program']) ?>">
+
+                <label for="year">Year of study</label>
+                <select id="year" name="year" required>
+                    <option value="">Select year</option>
+                    <?php for ($yearOption = 1; $yearOption <= 8; $yearOption++): ?>
+                        <option value="<?= $yearOption ?>" <?= $formValues['year'] === (string) $yearOption ? 'selected' : '' ?>>Year <?= $yearOption ?></option>
+                    <?php endfor; ?>
+                </select>
+
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select an option</option>
+                    <option value="female" <?= $formValues['gender'] === 'female' ? 'selected' : '' ?>>Female</option>
+                    <option value="male" <?= $formValues['gender'] === 'male' ? 'selected' : '' ?>>Male</option>
+                    <option value="nonbinary" <?= $formValues['gender'] === 'nonbinary' ? 'selected' : '' ?>>Non-binary</option>
+                    <option value="other" <?= $formValues['gender'] === 'other' ? 'selected' : '' ?>>Other</option>
+                    <option value="prefer_not_to_say" <?= $formValues['gender'] === 'prefer_not_to_say' ? 'selected' : '' ?>>Prefer not to say</option>
+                </select>
 
                 <label for="username">Username</label>
                 <input id="username" name="username" type="text" minlength="3" maxlength="30" pattern="[A-Za-z0-9_.-]{3,30}" autocomplete="username" required value="<?= signupEscape($formValues['username']) ?>" aria-describedby="username-help">
@@ -202,9 +278,17 @@ try {
                 <label for="password">Password</label>
                 <input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help">
                 <small id="password-help">Use 8–72 bytes. Passwords are case-sensitive.</small>
+                <label class="password-strength-label" for="password-strength">Password strength</label>
+                <progress id="password-strength" max="4" value="0">0%</progress>
+                <small id="password-strength-text" aria-live="polite">Enter a password to check its strength.</small>
 
                 <label for="confirm-password">Confirm password</label>
                 <input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" required>
+
+                <label class="terms-option" for="accept-terms">
+                    <input id="accept-terms" name="accept_terms" type="checkbox" value="1" required>
+                    I confirm that the details above are correct.
+                </label>
 
                 <button class="button" type="submit">Create account</button>
             </form>

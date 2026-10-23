@@ -24,10 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const studentDialog = document.querySelector('#student-dialog');
     const eventForm = document.querySelector('#event-form');
     const studentForm = document.querySelector('#student-form');
+    const collectionActions = document.querySelector('.collection-actions');
     let activeCollection = 'events';
     let records = [];
     let currentPage = 1;
     let loadVersion = 0;
+    collectionActions.hidden = document.body.dataset.portalRole !== 'admin';
 
     const setStatus = (message = '') => {
         dataStatus.textContent = message;

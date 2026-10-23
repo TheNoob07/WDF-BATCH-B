@@ -19,6 +19,12 @@ if (
     header('Location: login.php', true, 303);
     exit;
 }
+if (!in_array($_SESSION['auth_role'] ?? '', ['student', 'admin'], true)) {
+    http_response_code(403);
+    exit('Your account role is not authorized to access this page.');
+}
+$portalRole = htmlspecialchars((string) $_SESSION['auth_role'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$portalLogoutToken = htmlspecialchars((string) ($_SESSION['logout_csrf'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $_SESSION['last_activity'] = time();
 
 if (empty($_SESSION['contact_csrf'])) {
@@ -141,9 +147,11 @@ if (is_readable($storageFile) && ($handle = fopen($storageFile, 'r')) !== false)
     <title>Contact Support | Student Portal</title>
     <link rel="stylesheet" href="../CSS%20Files/help.css">
     <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="../CSS%20Files/portal-nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
-<body>
+<body data-portal-role="<?= $portalRole ?>" data-logout-csrf="<?= $portalLogoutToken ?>">
 <div class="portal-shell">
     <aside class="sidebar">
         <a class="logo" href="../index.html">Student<br>Portal</a>

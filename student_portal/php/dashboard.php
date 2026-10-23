@@ -50,6 +50,8 @@ $_SESSION['last_activity'] = time();
 $username = htmlspecialchars((string) $_SESSION['auth_username'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $csrfToken = $_SESSION['logout_csrf'] ?? bin2hex(random_bytes(32));
 $_SESSION['logout_csrf'] = $csrfToken;
+$portalRole = htmlspecialchars((string) $_SESSION['auth_role'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$portalLogoutToken = htmlspecialchars((string) $csrfToken, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,10 +60,12 @@ $_SESSION['logout_csrf'] = $csrfToken;
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="Your signed-in Student Portal dashboard.">
     <title>Student Dashboard | Student Portal</title>
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/portal-nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
-<body>
+<body data-portal-role="<?= $portalRole ?>" data-logout-csrf="<?= $portalLogoutToken ?>">
 <main class="signup-shell">
     <a class="brand" href="../index.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Student Portal</a>
     <section class="signup-card welcome-card">

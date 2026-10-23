@@ -218,8 +218,10 @@ try {
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="Sign in to the Student Portal using your registered username or email.">
     <title>Student Login | Student Portal</title>
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/registration.css">
+    <link rel="stylesheet" href="../CSS%20Files/portal-nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
 <body>
 <main class="signup-shell">
@@ -236,7 +238,8 @@ try {
         <?php if (!$databaseAvailable): ?>
             <div class="setup-note">
                 <h2>Database setup required</h2>
-                <p>Start MySQL in XAMPP and import <code>php/database-schema.sql</code> in phpMyAdmin. Existing databases may need the one-time <code>php/practical10-migration.sql</code> update.</p>
+                <p>Start MySQL in the XAMPP Control Panel. Then open phpMyAdmin, select <strong>Import</strong>, and import <code>../mysql/database-schema.sql</code> to create the database and required tables.</p>
+                <p>For an existing database, follow <a href="DATABASE-SETUP.md">the setup and migration guide</a>. Once setup is complete, reload this page to register or log in.</p>
             </div>
         <?php else: ?>
             <form method="post" action="login.php" class="signup-form">

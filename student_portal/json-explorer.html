@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Browse events, student profiles, and frequently asked questions loaded from JSON.">
-    <title>JSON Explorer | Student Portal</title>
-    <link rel="stylesheet" href="CSS Files/json-explorer.css">
+    <meta name="description" content="Browse StudentHub event, student, and FAQ data from JSON files.">
+    <title>Student Data | Student Portal</title>
+    <link rel="stylesheet" href="CSS%20Files/json-explorer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="Java Script Files/json-explorer.js" defer></script>
+    <script src="Java%20Script%20Files/json-explorer.js" defer></script>
+    <script src="Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
 <body>
 <div class="portal-shell">
@@ -23,80 +24,87 @@
             <a href="result.html"><span class="nav-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>Results</a>
             <a href="notice.html"><span class="nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>Notes</a>
             <a href="help.html"><span class="nav-icon"><i class="fa-solid fa-circle-question" aria-hidden="true"></i></span>Help</a>
-            <a href="json-explorer.html" class="active" aria-current="page"><span class="nav-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>JSON Explorer</a>
+            <a href="json-explorer.html" class="active" aria-current="page"><span class="nav-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>Data View</a>
+            <a href="php/login.php"><span class="nav-icon"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i></span>Log in</a>
         </nav>
     </aside>
 
-    <main class="dashboard container">
+    <main class="dashboard">
         <header class="welcome-bar">
-            <div class="welcome-avatar"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
-            <div class="welcome-copy"><span>Student Portal</span><strong>Data Library</strong></div>
-            <button class="refresh-button" id="refresh-button" type="button" title="Reload data" aria-label="Reload data">
-                <i class="fa-solid fa-rotate" aria-hidden="true"></i>
-            </button>
+            <div class="welcome-avatar"><i class="fa-solid fa-database" aria-hidden="true"></i></div>
+            <div class="welcome-copy"><span>StudentHub data</span><strong>Browse portal records</strong></div>
+            <button type="button" class="refresh-button" id="refresh-button" aria-label="Refresh data"><i class="fa-solid fa-rotate" aria-hidden="true"></i></button>
         </header>
 
         <section class="page-heading">
-            <div class="heading-icon"><i class="fa-solid fa-database" aria-hidden="true"></i></div>
-            <div>
-                <p class="eyebrow">LIVE JSON COLLECTIONS</p>
-                <h1>Campus Data Explorer</h1>
-                <p>Events, student profiles, and answers from the campus community.</p>
-            </div>
+            <div class="heading-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
+            <div><p class="eyebrow">PRACTICAL 6</p><h1>Data explorer</h1><p>Search, filter, sort, and page through JSON data collections.</p></div>
         </section>
 
-        <section class="explorer" aria-label="JSON data explorer">
-            <div class="collection-tabs" role="tablist" aria-label="Choose a collection">
-                <button class="collection-tab active" id="tab-events" type="button" role="tab" aria-selected="true" data-collection="events">
-                    <i class="fa-regular fa-calendar" aria-hidden="true"></i><span>Events</span>
-                </button>
-                <button class="collection-tab" id="tab-students" type="button" role="tab" aria-selected="false" data-collection="students">
-                    <i class="fa-solid fa-user-group" aria-hidden="true"></i><span>Students</span>
-                </button>
-                <button class="collection-tab" id="tab-faqs" type="button" role="tab" aria-selected="false" data-collection="faqs">
-                    <i class="fa-regular fa-circle-question" aria-hidden="true"></i><span>FAQs</span>
-                </button>
+        <section class="explorer" aria-label="JSON data collections">
+            <div class="collection-tabs" role="tablist" aria-label="Data collection">
+                <button type="button" class="collection-tab active" role="tab" aria-selected="true" data-collection="events"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Events</button>
+                <button type="button" class="collection-tab" role="tab" aria-selected="false" data-collection="students"><i class="fa-solid fa-users" aria-hidden="true"></i> Students</button>
+                <button type="button" class="collection-tab" role="tab" aria-selected="false" data-collection="faqs"><i class="fa-regular fa-circle-question" aria-hidden="true"></i> FAQs</button>
             </div>
-
+            <div class="collection-actions">
+                <button type="button" class="collection-action" id="add-event-button"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add event</button>
+                <button type="button" class="collection-action" id="add-student-button"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Add student</button>
+            </div>
             <div class="toolbar">
-                <label class="search-box" for="search-input">
-                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                    <input id="search-input" type="search" placeholder="Search this collection" autocomplete="off">
-                </label>
-                <label class="select-control" for="filter-select">
-                    <span>Filter</span>
-                    <select id="filter-select" aria-label="Filter by category"></select>
-                </label>
-                <label class="select-control" for="sort-select">
-                    <span>Sort</span>
-                    <select id="sort-select" aria-label="Sort results">
-                        <option value="title-asc">Name: A to Z</option>
-                        <option value="title-desc">Name: Z to A</option>
-                    </select>
-                </label>
+                <label class="search-box"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span class="visually-hidden">Search this collection</span><input id="search-input" type="search" placeholder="Search records..." autocomplete="off"></label>
+                <label class="select-control"><span>Filter</span><select id="filter-select"><option value="all">All</option></select></label>
+                <label class="select-control"><span>Sort</span><select id="sort-select"><option value="title-asc">A to Z</option><option value="title-desc">Z to A</option></select></label>
             </div>
-
             <div id="location-filters" class="location-filters" hidden>
-                <label class="select-control" for="country-select"><span>Country</span><select id="country-select" aria-label="Filter by country"></select></label>
-                <label class="select-control" for="state-select"><span>State</span><select id="state-select" aria-label="Filter by state"></select></label>
-                <label class="select-control" for="city-select"><span>City</span><select id="city-select" aria-label="Filter by city"></select></label>
+                <label class="select-control"><span>Country</span><select id="country-select"><option value="all">All countries</option></select></label>
+                <label class="select-control"><span>State</span><select id="state-select"><option value="all">All states</option></select></label>
+                <label class="select-control"><span>City</span><select id="city-select"><option value="all">All cities</option></select></label>
             </div>
-
-            <div class="result-summary">
-                <p id="result-count" aria-live="polite">Loading collection...</p>
-                <span id="data-source" class="source-label">Connecting</span>
-            </div>
-
-            <div id="data-status" class="data-status" role="status" aria-live="polite">Loading JSON data...</div>
+            <div class="result-summary"><p id="result-count" aria-live="polite">Loading records...</p><span id="data-source" class="source-label">Connecting</span></div>
+            <p id="data-status" class="data-status" role="status" aria-live="polite"></p>
             <div id="record-list" class="record-list" aria-live="polite"></div>
-
-            <nav class="pagination" aria-label="Collection pages">
-                <button id="previous-page" type="button" aria-label="Previous page" disabled><i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span>Previous</span></button>
-                <span id="page-indicator">Page 1</span>
-                <button id="next-page" type="button" aria-label="Next page" disabled><span>Next</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            <nav class="pagination" aria-label="Data page navigation">
+                <button type="button" id="previous-page"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Previous</button>
+                <span id="page-indicator">Page 1 of 1</span>
+                <button type="button" id="next-page">Next <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
             </nav>
         </section>
+        <a class="back-link" href="index.html">Back to portal home</a>
     </main>
 </div>
+
+<dialog id="event-dialog" class="entry-dialog">
+    <form id="event-form" class="entry-dialog-content">
+        <div class="dialog-heading"><h2>Add event</h2><button type="button" class="dialog-close" data-dialog-close aria-label="Close dialog">&times;</button></div>
+        <div class="entry-fields">
+            <label class="entry-field">Title<input name="title" maxlength="120" required></label>
+            <label class="entry-field">Category<input name="category" maxlength="60" required></label>
+            <label class="entry-field">Date<input name="date" type="date" required></label>
+            <label class="entry-field">Location<input name="location" maxlength="120" required></label>
+            <label class="entry-field entry-field-wide">Description<textarea name="description" maxlength="1000" rows="4" required></textarea></label>
+        </div>
+        <p class="form-feedback" data-form-feedback role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button type="button" class="dialog-cancel" data-dialog-close>Cancel</button><button type="submit" class="dialog-submit">Save event</button></div>
+    </form>
+</dialog>
+
+<dialog id="student-dialog" class="entry-dialog">
+    <form id="student-form" class="entry-dialog-content">
+        <div class="dialog-heading"><h2>Add student</h2><button type="button" class="dialog-close" data-dialog-close aria-label="Close dialog">&times;</button></div>
+        <div class="entry-fields">
+            <label class="entry-field">Name<input name="name" maxlength="80" required></label>
+            <label class="entry-field">Email<input name="email" type="email" maxlength="254" required></label>
+            <label class="entry-field">Program<input name="program" maxlength="120" required></label>
+            <label class="entry-field">Department<input name="department" maxlength="80" required></label>
+            <label class="entry-field">Year<input name="year" type="number" min="1" max="8" required></label>
+            <label class="entry-field">Country<input name="country" maxlength="80" required></label>
+            <label class="entry-field">State<input name="state" maxlength="80" required></label>
+            <label class="entry-field">City<input name="city" maxlength="80" required></label>
+        </div>
+        <p class="form-feedback" data-form-feedback role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button type="button" class="dialog-cancel" data-dialog-close>Cancel</button><button type="submit" class="dialog-submit">Save student</button></div>
+    </form>
+</dialog>
 </body>
 </html>

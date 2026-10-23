@@ -44,6 +44,8 @@ if ($_SESSION['auth_role'] !== 'admin') {
 }
 
 $_SESSION['last_activity'] = time();
+$portalRole = htmlspecialchars((string) $_SESSION['auth_role'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$portalLogoutToken = htmlspecialchars((string) ($_SESSION['logout_csrf'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 if (empty($_SESSION['database_csrf'])) {
     $_SESSION['database_csrf'] = bin2hex(random_bytes(32));
@@ -213,9 +215,11 @@ if ($pdo instanceof PDO) {
     <meta name="description" content="Practical 8 MySQL database demonstration for Student Portal.">
     <title>Practical 8: MySQL Database | Student Portal</title>
     <link rel="stylesheet" href="database.css">
+    <link rel="stylesheet" href="../CSS%20Files/portal-nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="../Java%20Script%20Files/portal-nav.js" defer></script>
 </head>
-<body>
+<body data-portal-role="<?= $portalRole ?>" data-logout-csrf="<?= $portalLogoutToken ?>">
 <div class="portal-shell">
     <aside class="sidebar">
         <a class="logo" href="../index.html">Student<br>Portal</a>
@@ -231,6 +235,7 @@ if ($pdo instanceof PDO) {
             <a href="../help.html"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>Help</a>
             <a href="registration.php"><i class="fa-solid fa-user-plus" aria-hidden="true"></i>Sign Up</a>
             <a href="login.php"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>Log in</a>
+            <a href="manage-records.php"><i class="fa-solid fa-users-gear" aria-hidden="true"></i>Manage records</a>
             <a href="database.php" class="active" aria-current="page"><i class="fa-solid fa-database" aria-hidden="true"></i>Database</a>
         </nav>
     </aside>
@@ -257,7 +262,7 @@ if ($pdo instanceof PDO) {
         <?php if ($pdo === null): ?>
             <section class="setup-note">
                 <h2>Database setup required</h2>
-                <p>Start MySQL in XAMPP, import <code>php/database-schema.sql</code> in phpMyAdmin, and check the connection settings in <code>php/db.php</code>.</p>
+                <p>Start MySQL in XAMPP, import <code>../mysql/database-schema.sql</code> in phpMyAdmin, and check the connection settings in <code>db.php</code>.</p>
                 <p>The default connection is <code>127.0.0.1</code>, database <code>studenthub</code>, user <code>root</code>, and an empty password. Set the <code>STUDENT_PORTAL_DB_HOST</code>, <code>STUDENT_PORTAL_DB_NAME</code>, <code>STUDENT_PORTAL_DB_USER</code>, and <code>STUDENT_PORTAL_DB_PASSWORD</code> environment variables to use different values.</p>
             </section>
         <?php else: ?>

@@ -26,6 +26,10 @@ if (!isset($_SESSION['auth_user_id'], $_SESSION['auth_username'], $_SESSION['aut
     header('Location: ' . $portalBase . '/php/login.php', true, 303);
     exit;
 }
+if (!in_array($_SESSION['auth_role'], ['student', 'admin'], true)) {
+    http_response_code(403);
+    exit('Your account role is not authorized to access this page.');
+}
 
 $lastActivity = filter_var($_SESSION['last_activity'] ?? null, FILTER_VALIDATE_INT);
 $loginTime = filter_var($_SESSION['login_time'] ?? null, FILTER_VALIDATE_INT);
@@ -69,4 +73,16 @@ if ($page === false) {
 
 header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: no-store');
+$role = htmlspecialchars((string) $_SESSION['auth_role'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$logoutToken = htmlspecialchars((string) ($_SESSION['logout_csrf'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$page = preg_replace(
+    '/<body(?=[\\s>])/',
+    '<body data-portal-role="' . $role . '" data-logout-csrf="' . $logoutToken . '"',
+    $page,
+    1
+);
+if (!is_string($page)) {
+    http_response_code(500);
+    exit('The requested page could not be prepared.');
+}
 echo $page;
